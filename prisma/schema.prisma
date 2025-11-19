@@ -1,0 +1,81 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+model User {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+  email String @unique
+  name String @unique
+  password String
+  followers Follower[]
+  posts Post[]
+  likes Like[]
+  dislikes Dislikes[]
+  comments Comment[]
+  replies Reply[]
+}
+
+model Follower{
+    id String @id @default(auto()) @map("_id") @db.ObjectId
+    userId String @db.ObjectId
+    user User @relation(fields: [userId], references: [id])
+    createdAt DateTime
+}
+
+model Post {
+    id String @id @default(auto()) @map("_id") @db.ObjectId
+    userId String @db.ObjectId
+    user User @relation(fields: [userId], references: [id])
+    likes Like[]
+    dislikes Dislikes[]
+    title String?
+    body String?
+    image String?
+    createdAt DateTime
+    updatedAt DateTime
+}
+
+model Like {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+  userId String @db.ObjectId
+  user User @relation(fields: [userId], references: [id])
+  postId String @db.ObjectId
+  post Post? @relation(fields: [postId], references: [id])
+  commentId String @db.ObjectId
+  comment Comment? @relation(fields: [commentId], references: [id])
+}
+
+model Dislikes {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+  userId String @db.ObjectId
+  user User @relation(fields: [userId], references: [id])
+  postId String @db.ObjectId
+  post Post? @relation(fields: [postId], references: [id])
+  commentId String @db.ObjectId
+  comment Comment? @relation(fields: [commentId], references: [id])
+}
+
+model Comment {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+  userId String @db.ObjectId
+  user User @relation(fields: [userId], references: [id])
+  likeId String @db.ObjectId
+  likes Like[]
+  dislikes Dislikes[]
+  replies Reply[]
+  body String
+  image String?
+}
+
+model Reply {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+  userId String @db.ObjectId
+  user User @relation(fields: [userId], references: [id])
+  commentId String @db.ObjectId
+  comment Comment? @relation(fields: [commentId], references: [id])
+}
