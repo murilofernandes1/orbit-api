@@ -1,8 +1,7 @@
 import express from "express";
-import pkg from "@prisma/client";
-const { PrismaClient } = pkg;
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
+import { PrismaClient } from "../../../generated/prisma/index.js";
 const prisma = new PrismaClient();
 const router = express.Router();
 const JWT_SECRET = process.env.JWT_SECRET;

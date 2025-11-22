@@ -141,14 +141,16 @@ exports.Prisma.LikeScalarFieldEnum = {
   id: 'id',
   userId: 'userId',
   postId: 'postId',
-  commentId: 'commentId'
+  commentId: 'commentId',
+  createdAt: 'createdAt'
 };
 
 exports.Prisma.DislikesScalarFieldEnum = {
   id: 'id',
   userId: 'userId',
   postId: 'postId',
-  commentId: 'commentId'
+  commentId: 'commentId',
+  createdAt: 'createdAt'
 };
 
 exports.Prisma.CommentScalarFieldEnum = {
@@ -156,13 +158,17 @@ exports.Prisma.CommentScalarFieldEnum = {
   userId: 'userId',
   likeId: 'likeId',
   body: 'body',
-  image: 'image'
+  image: 'image',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
 };
 
 exports.Prisma.ReplyScalarFieldEnum = {
   id: 'id',
   userId: 'userId',
-  commentId: 'commentId'
+  commentId: 'commentId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
 };
 
 exports.Prisma.SortOrder = {

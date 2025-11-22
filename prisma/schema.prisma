@@ -1,6 +1,9 @@
+
 generator client {
   provider = "prisma-client-js"
+  output   = "../src/generated/prisma"
 }
+
 
 datasource db {
   provider = "mongodb"
@@ -35,8 +38,8 @@ model Post {
     title String?
     body String?
     image String?
-    createdAt DateTime
-    updatedAt DateTime
+    createdAt DateTime @default(now())
+    updatedAt DateTime @default(now())
 }
 
 model Like {
@@ -47,6 +50,7 @@ model Like {
   post Post? @relation(fields: [postId], references: [id])
   commentId String @db.ObjectId
   comment Comment? @relation(fields: [commentId], references: [id])
+  createdAt DateTime @default(now())
 }
 
 model Dislikes {
@@ -57,6 +61,7 @@ model Dislikes {
   post Post? @relation(fields: [postId], references: [id])
   commentId String @db.ObjectId
   comment Comment? @relation(fields: [commentId], references: [id])
+    createdAt DateTime @default(now())
 }
 
 model Comment {
@@ -69,6 +74,8 @@ model Comment {
   replies Reply[]
   body String
   image String?
+  createdAt DateTime @default(now())
+    updatedAt DateTime @default(now())
 }
 
 model Reply {
@@ -77,4 +84,6 @@ model Reply {
   user User @relation(fields: [userId], references: [id])
   commentId String @db.ObjectId
   comment Comment? @relation(fields: [commentId], references: [id])
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now())
 }
