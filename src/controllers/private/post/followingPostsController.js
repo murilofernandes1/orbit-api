@@ -30,6 +30,7 @@ router.get("/", async (req, res) => {
       orderBy: {
         createdAt: "desc",
       },
+      include: { user: { omit: { password: true, email: true } } },
     });
 
     return res.status(200).json(followedPosts);

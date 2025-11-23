@@ -13,7 +13,7 @@ router.get("/", async (req, res) => {
   try {
     const posts = await prisma.post.findMany({
       orderBy: { createdAt: "desc" },
-      include: { user: { omit: { password: true } } }, //aqui indico o campo e a ordem que eu quero que os dados apareçam, nesse caso em decrescente.
+      include: { user: { omit: { password: true, email: true } } }, //aqui indico o campo e a ordem que eu quero que os dados apareçam, nesse caso em decrescente.
     });
     return res.status(200).json(posts);
   } catch (error) {
