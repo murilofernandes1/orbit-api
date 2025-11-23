@@ -121,9 +121,10 @@ exports.Prisma.UserScalarFieldEnum = {
   password: 'password'
 };
 
-exports.Prisma.FollowerScalarFieldEnum = {
+exports.Prisma.FollowScalarFieldEnum = {
   id: 'id',
-  userId: 'userId',
+  followerId: 'followerId',
+  followedId: 'followedId',
   createdAt: 'createdAt'
 };
 
@@ -184,7 +185,7 @@ exports.Prisma.QueryMode = {
 
 exports.Prisma.ModelName = {
   User: 'User',
-  Follower: 'Follower',
+  Follow: 'Follow',
   Post: 'Post',
   Like: 'Like',
   Dislikes: 'Dislikes',

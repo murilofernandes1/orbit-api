@@ -9,23 +9,24 @@ datasource db {
 }
 
 model User {
-  id        String     @id @default(auto()) @map("_id") @db.ObjectId
-  email     String     @unique
-  name      String     @unique
-  password  String
-  followers Follower[]
-  posts     Post[]
-  likes     Like[]
-  dislikes  Dislikes[]
-  comments  Comment[]
-  replies   Reply[]
+  id       String     @id @default(auto()) @map("_id") @db.ObjectId
+  email    String     @unique
+  name     String     @unique
+  password String
+  posts    Post[]
+  likes    Like[]
+  dislikes Dislikes[]
+  comments Comment[]
+  replies  Reply[]
 }
 
-model Follower {
-  id        String   @id @default(auto()) @map("_id") @db.ObjectId
-  userId    String   @db.ObjectId
-  user      User     @relation(fields: [userId], references: [id])
-  createdAt DateTime
+model Follow {
+  id         String   @id @default(auto()) @map("_id") @db.ObjectId
+  followerId String   @db.ObjectId
+  followedId String   @db.ObjectId
+  createdAt  DateTime @default(now())
+
+  @@unique([followerId, followedId])
 }
 
 model Post {

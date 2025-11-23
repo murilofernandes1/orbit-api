@@ -14,7 +14,6 @@ model User {
   email String @unique
   name String @unique
   password String
-  followers Follower[]
   posts Post[]
   likes Like[]
   dislikes Dislikes[]
@@ -22,12 +21,14 @@ model User {
   replies Reply[]
 }
 
-model Follower{
+model Follow{
     id String @id @default(auto()) @map("_id") @db.ObjectId
-    userId String @db.ObjectId
-    user User @relation(fields: [userId], references: [id])
-    createdAt DateTime
+    followerId String @db.ObjectId 
+    followedId String @db.ObjectId 
+     @@unique([followerId, followedId])
+    createdAt DateTime @default(now())
 }
+
 
 model Post {
     id String @id @default(auto()) @map("_id") @db.ObjectId
