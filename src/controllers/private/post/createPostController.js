@@ -16,9 +16,8 @@ router.post("/", async (req, res) => {
     const createPost = await prisma.post.create({
       data: {
         userId: userId,
-        title: post.title,
         body: post.body,
-        image: post.image,
+        image: post?.image,
       },
     });
     return res.status(200).json({ message: "Post criado com sucesso." });
