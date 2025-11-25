@@ -16,7 +16,12 @@ router.get("/", async (req, res) => {
         where: {
           id: userId,
         },
-        include: { posts: true, likes: true, comments: true, replies: true },
+        include: {
+          posts: true,
+          followers: true,
+          comments: true,
+          following: true,
+        },
       },
       { omit: { password: true } }
     );

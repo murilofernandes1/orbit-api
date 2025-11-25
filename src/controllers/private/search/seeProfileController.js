@@ -1,34 +1,36 @@
 import express from "express";
 import { PrismaClient } from "../../../generated/prisma/index.js";
+
 const router = express.Router();
 const prisma = new PrismaClient();
 
-router.get("/", async (req, res) => {
+router.get("/:id", async (req, res) => {
   const userId = req.userId;
+  const { id } = req.params;
   if (!userId) {
     return res
       .status(404)
       .json({ message: "Usuário não autenticado ou não existe" });
   }
   try {
-    const { name } = req.query;
-
-    const user = await prisma.user.findMany({
-      where: {
-        name: {
-          contains: String(name),
-          mode: "insensitive",
-        },
+    const seeUser = await prisma.user.findUnique({
+      where: { id: id },
+      include: {
+        posts: true,
+        followers: true,
+        comments: true,
+        following: true,
       },
       omit: { password: true, email: true },
     });
-    if (!user) {
-      res.status(404).json({ message: "Usuário não encontrado." });
-    }
-    res.json(user);
+    return res.status(200).json(seeUser);
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    res
+      .status(500)
+      .json({ message: "Não foi possível ver o perfil do usuário" });
     console.log(error);
   }
+
+  return;
 });
 export default router;

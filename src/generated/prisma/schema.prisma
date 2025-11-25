@@ -9,21 +9,25 @@ datasource db {
 }
 
 model User {
-  id       String     @id @default(auto()) @map("_id") @db.ObjectId
-  email    String     @unique
-  name     String     @unique
-  password String
-  posts    Post[]
-  likes    Like[]
-  dislikes Dislikes[]
-  comments Comment[]
-  replies  Reply[]
+  id        String     @id @default(auto()) @map("_id") @db.ObjectId
+  email     String     @unique
+  name      String     @unique
+  password  String
+  posts     Post[]
+  likes     Like[]
+  dislikes  Dislikes[]
+  comments  Comment[]
+  replies   Reply[]
+  following Follow[]   @relation("Following")
+  followers Follow[]   @relation("Followers")
 }
 
 model Follow {
   id         String   @id @default(auto()) @map("_id") @db.ObjectId
   followerId String   @db.ObjectId
+  follower   User     @relation("Following", fields: [followerId], references: [id])
   followedId String   @db.ObjectId
+  followed   User     @relation("Followers", fields: [followedId], references: [id])
   createdAt  DateTime @default(now())
 
   @@unique([followerId, followedId])
